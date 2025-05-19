@@ -1,0 +1,24 @@
+document.getElementById('imageUpload').addEventListener('change', function(event) {
+    const imageFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('uploadedImage').src = e.target.result;
+
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('extractedText').value = data.text;
+        })
+        .catch(error => console.error('Error:', error));
+    };
+    reader.readAsDataURL(imageFile);
+});
+2:30 PM
+
+
